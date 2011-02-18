@@ -709,6 +709,9 @@ class PdfFileReader(object):
         # find startxref entry - the location of the xref table
         line = self.readNextEndLine(stream)
         startxref = int(line)
+        # stash the last startxref entry, so it can be referenced when
+        # incrementally updating
+        self.startxref = startxref
         line = self.readNextEndLine(stream)
         if line[:9] != "startxref":
             raise utils.PdfReadError, "startxref not found"
